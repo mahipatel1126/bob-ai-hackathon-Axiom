@@ -1,0 +1,170 @@
+[
+  {
+    "asset_id": "FLT-REEFER-01",
+    "asset_name": "ThermoKing SmartReefer Pro 40",
+    "asset_type": "REEFER_TRUCK",
+    "current_location": {
+      "name": "Gary Inland Logistics Depot",
+      "city": "Gary",
+      "country": "USA",
+      "coordinates": {
+        "latitude": 41.5934,
+        "longitude": -87.3465
+      },
+      "facility_type": "DEPOT"
+    },
+    "status": "IDLE",
+    "weight_capacity_kg": 19500.0,
+    "volume_capacity_cbm": 78.0,
+    "reefer_capability": {
+      "is_reefer": true,
+      "min_cooling_temp_c": -28.0,
+      "max_cooling_temp_c": 12.0,
+      "backup_power_hours": 72.0
+    },
+    "is_available": true,
+    "available_from": "2026-09-14T00:00:00Z",
+    "home_depot": "Gary Depot #4",
+    "driver_assigned": "Marcus Vance (Active / Standby)"
+  },
+  {
+    "asset_id": "FLT-REEFER-02",
+    "asset_name": "Carrier Transicold Ultima 53",
+    "asset_type": "REEFER_TRUCK",
+    "current_location": {
+      "name": "Indianapolis Central Logistics Park",
+      "city": "Indianapolis",
+      "country": "USA",
+      "coordinates": {
+        "latitude": 39.7684,
+        "longitude": -86.1581
+      },
+      "facility_type": "DISTRIBUTION_CENTER"
+    },
+    "status": "IDLE",
+    "weight_capacity_kg": 22500.0,
+    "volume_capacity_cbm": 86.0,
+    "reefer_capability": {
+      "is_reefer": true,
+      "min_cooling_temp_c": -32.0,
+      "max_cooling_temp_c": 15.0,
+      "backup_power_hours": 96.0
+    },
+    "is_available": true,
+    "available_from": "2026-09-14T06:00:00Z",
+    "home_depot": "Indy Logistics Hub",
+    "driver_assigned": "Elena Rostova (Active / Standby)"
+  },
+  {
+    "asset_id": "FLT-DRY-03",
+    "asset_name": "Freightliner Cascadia Dry Van 53",
+    "asset_type": "TRUCK",
+    "current_location": {
+      "name": "Detroit Intermodal Freight Depot",
+      "city": "Detroit",
+      "country": "USA",
+      "coordinates": {
+        "latitude": 42.3314,
+        "longitude": -83.0458
+      },
+      "facility_type": "DEPOT"
+    },
+    "status": "IDLE",
+    "weight_capacity_kg": 24000.0,
+    "volume_capacity_cbm": 105.0,
+    "reefer_capability": {
+      "is_reefer": false,
+      "min_cooling_temp_c": null,
+      "max_cooling_temp_c": null,
+      "backup_power_hours": null
+    },
+    "is_available": true,
+    "available_from": "2026-09-14T08:00:00Z",
+    "home_depot": "Detroit Terminal East",
+    "driver_assigned": "Jamal Davis (Available)"
+  },
+  {
+    "asset_id": "FLT-REEFER-04",
+    "asset_name": "ThermoKing AeroReefer 32",
+    "asset_type": "REEFER_TRUCK",
+    "current_location": {
+      "name": "Dallas-Fort Worth Freight Gateway",
+      "city": "Dallas",
+      "country": "USA",
+      "coordinates": {
+        "latitude": 32.7767,
+        "longitude": -96.7970
+      },
+      "facility_type": "DISTRIBUTION_CENTER"
+    },
+    "status": "EN_ROUTE",
+    "weight_capacity_kg": 16000.0,
+    "volume_capacity_cbm": 64.0,
+    "reefer_capability": {
+      "is_reefer": true,
+      "min_cooling_temp_c": -20.0,
+      "max_cooling_temp_c": 10.0,
+      "backup_power_hours": 48.0
+    },
+    "is_available": false,
+    "available_from": "2026-09-16T12:00:00Z",
+    "home_depot": "DFW Regional Hub",
+    "driver_assigned": "Carlos Ramirez (En Route)"
+  },
+  {
+    "asset_id": "FLT-VAN-05",
+    "asset_name": "Mercedes Sprinter Pharma Van",
+    "asset_type": "SPRINTER_VAN",
+    "current_location": {
+      "name": "Chicago O'Hare Pharma Air Cargo Center",
+      "city": "Chicago",
+      "country": "USA",
+      "coordinates": {
+        "latitude": 41.9742,
+        "longitude": -87.9073
+      },
+      "facility_type": "AIRPORT"
+    },
+    "status": "MAINTENANCE",
+    "weight_capacity_kg": 3200.0,
+    "volume_capacity_cbm": 14.5,
+    "reefer_capability": {
+      "is_reefer": true,
+      "min_cooling_temp_c": 2.0,
+      "max_cooling_temp_c": 8.0,
+      "backup_power_hours": 24.0
+    },
+    "is_available": false,
+    "available_from": "2026-09-15T16:00:00Z",
+    "home_depot": "O'Hare Airfreight Complex",
+    "driver_assigned": null
+  },
+  {
+    "asset_id": "FLT-BARGE-06",
+    "asset_name": "Rhine-Scheldt Feeder Barge 12",
+    "asset_type": "CARGO_VESSEL",
+    "current_location": {
+      "name": "Port of Antwerp Lock 4 Basin",
+      "city": "Antwerp",
+      "country": "Belgium",
+      "coordinates": {
+        "latitude": 51.2194,
+        "longitude": 4.4025
+      },
+      "facility_type": "PORT"
+    },
+    "status": "IDLE",
+    "weight_capacity_kg": 850000.0,
+    "volume_capacity_cbm": 2400.0,
+    "reefer_capability": {
+      "is_reefer": false,
+      "min_cooling_temp_c": null,
+      "max_cooling_temp_c": null,
+      "backup_power_hours": null
+    },
+    "is_available": true,
+    "available_from": "2026-09-14T14:00:00Z",
+    "home_depot": "Antwerp Basin East",
+    "driver_assigned": "Captain Pieter De Smet"
+  }
+]

@@ -1,0 +1,148 @@
+{
+  "carriers": [
+    {
+      "carrier_id": "CARRIER-EXP-01",
+      "carrier_name": "Vanguard Critical Express Air & Expedited",
+      "transport_mode": "AIR",
+      "rate_usd": 6800.0,
+      "transit_time_hours": 6.5,
+      "reliability_score": 0.98,
+      "capacity_available": true,
+      "notes": "Dedicated cargo charters with active cold-chain compartments and priority ramp access."
+    },
+    {
+      "carrier_id": "CARRIER-EXP-02",
+      "carrier_name": "Midwest Premier Heavy Haul",
+      "transport_mode": "ROAD",
+      "rate_usd": 3950.0,
+      "transit_time_hours": 17.0,
+      "reliability_score": 0.93,
+      "capacity_available": true,
+      "notes": "Equipped with dual-driver teams and chains/severe weather emergency clearance."
+    },
+    {
+      "carrier_id": "CARRIER-EXP-03",
+      "carrier_name": "Cross-Country Intermodal Rail Services",
+      "transport_mode": "RAIL",
+      "rate_usd": 2400.0,
+      "transit_time_hours": 24.0,
+      "reliability_score": 0.89,
+      "capacity_available": true,
+      "notes": "Electrified container rail bypassing Midwest highway gridlock via southern transcon corridor."
+    },
+    {
+      "carrier_id": "CARRIER-EXP-04",
+      "carrier_name": "EuroBarge & Rhine Logistics",
+      "transport_mode": "MARITIME",
+      "rate_usd": 1850.0,
+      "transit_time_hours": 14.0,
+      "reliability_score": 0.95,
+      "capacity_available": true,
+      "notes": "Inland waterway diversion avoiding congested ocean port container terminals."
+    }
+  ],
+  "route_alternatives": [
+    {
+      "route_id": "RTE-ALT-SOUTH-01",
+      "target_shipment_id": "SHP-1003",
+      "route_name": "Southern Bypass via I-70/I-44 Corridor",
+      "path_summary": "Detroit -> Fort Wayne -> Indianapolis (I-69/I-70) -> St. Louis -> Kansas City",
+      "transport_mode": "ROAD",
+      "distance_km": 1280.0,
+      "estimated_transit_hours": 15.5,
+      "risk_score": 0.12,
+      "estimated_cost_usd": 4100.0,
+      "waypoints": [
+        {
+          "name": "Detroit Origin",
+          "coordinates": { "latitude": 42.3314, "longitude": -83.0458 },
+          "estimated_arrival": "2026-09-14T23:00:00Z",
+          "actual_arrival": null,
+          "is_passed": false
+        },
+        {
+          "name": "Indianapolis South Interchange",
+          "coordinates": { "latitude": 39.7684, "longitude": -86.1581 },
+          "estimated_arrival": "2026-09-15T04:30:00Z",
+          "actual_arrival": null,
+          "is_passed": false
+        },
+        {
+          "name": "St. Louis Gateway Waypoint",
+          "coordinates": { "latitude": 38.6270, "longitude": -90.1994 },
+          "estimated_arrival": "2026-09-15T09:30:00Z",
+          "actual_arrival": null,
+          "is_passed": false
+        },
+        {
+          "name": "Kansas City Destination",
+          "coordinates": { "latitude": 39.0997, "longitude": -94.5786 },
+          "estimated_arrival": "2026-09-15T14:30:00Z",
+          "actual_arrival": null,
+          "is_passed": false
+        }
+      ]
+    },
+    {
+      "route_id": "RTE-ALT-AIR-02",
+      "target_shipment_id": "SHP-1002",
+      "route_name": "Critical BioPharma Air Cargo Airlift (IND -> DEN)",
+      "path_summary": "South Bend (Local Transfer to Indy Hub) -> Indianapolis Cargo Airport (IND) -> Denver Cargo (DEN)",
+      "transport_mode": "AIR",
+      "distance_km": 1650.0,
+      "estimated_transit_hours": 5.0,
+      "risk_score": 0.04,
+      "estimated_cost_usd": 6800.0,
+      "waypoints": [
+        {
+          "name": "South Bend Rescue Handoff",
+          "coordinates": { "latitude": 41.6764, "longitude": -86.2520 },
+          "estimated_arrival": "2026-09-14T23:30:00Z",
+          "actual_arrival": null,
+          "is_passed": false
+        },
+        {
+          "name": "Indianapolis Air Cargo Hub (IND)",
+          "coordinates": { "latitude": 39.7173, "longitude": -86.2944 },
+          "estimated_arrival": "2026-09-15T02:00:00Z",
+          "actual_arrival": null,
+          "is_passed": false
+        },
+        {
+          "name": "Denver International Air Cargo (DEN)",
+          "coordinates": { "latitude": 39.8561, "longitude": -104.6737 },
+          "estimated_arrival": "2026-09-15T04:30:00Z",
+          "actual_arrival": null,
+          "is_passed": false
+        }
+      ]
+    },
+    {
+      "route_id": "RTE-ALT-INLAND-03",
+      "target_shipment_id": "SHP-1004",
+      "route_name": "Inland Barge Diversion to Port of Vlissingen / Moerdijk Hub",
+      "path_summary": "Antwerp Lock 4 -> Scheldt River Feeder -> Inland Terminal Moerdijk",
+      "transport_mode": "MARITIME",
+      "distance_km": 95.0,
+      "estimated_transit_hours": 11.0,
+      "risk_score": 0.10,
+      "estimated_cost_usd": 1850.0,
+      "waypoints": [
+        {
+          "name": "Antwerp Basin East",
+          "coordinates": { "latitude": 51.2194, "longitude": 4.4025 },
+          "estimated_arrival": "2026-09-14T21:00:00Z",
+          "actual_arrival": null,
+          "is_passed": false
+        },
+        {
+          "name": "Inland Terminal Moerdijk Quay",
+          "coordinates": { "latitude": 51.6967, "longitude": 4.6300 },
+          "estimated_arrival": "2026-09-15T08:00:00Z",
+          "actual_arrival": null,
+          "is_passed": false
+        }
+      ]
+    }
+  ]
+}

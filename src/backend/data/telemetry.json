@@ -1,0 +1,227 @@
+[
+  {
+    "shipment_id": "SHP-1002",
+    "timestamp": "2026-09-14T17:00:00Z",
+    "temperature_c": 3.8,
+    "asset_id": "FLT-TRK-701",
+    "humidity_pct": 48.0,
+    "ambient_temp_c": 2.0,
+    "battery_level_pct": 98.0,
+    "door_opened": false,
+    "location": {
+      "latitude": 41.5500,
+      "longitude": -85.1000
+    },
+    "sensor_id": "SNS-CC-0941"
+  },
+  {
+    "shipment_id": "SHP-1002",
+    "timestamp": "2026-09-14T18:00:00Z",
+    "temperature_c": 4.1,
+    "asset_id": "FLT-TRK-701",
+    "humidity_pct": 49.0,
+    "ambient_temp_c": -1.0,
+    "battery_level_pct": 96.0,
+    "door_opened": false,
+    "location": {
+      "latitude": 41.6100,
+      "longitude": -85.7000
+    },
+    "sensor_id": "SNS-CC-0941"
+  },
+  {
+    "shipment_id": "SHP-1002",
+    "timestamp": "2026-09-14T19:00:00Z",
+    "temperature_c": 4.5,
+    "asset_id": "FLT-TRK-701",
+    "humidity_pct": 51.0,
+    "ambient_temp_c": -6.0,
+    "battery_level_pct": 93.0,
+    "door_opened": false,
+    "location": {
+      "latitude": 41.6764,
+      "longitude": -86.2520
+    },
+    "sensor_id": "SNS-CC-0941"
+  },
+  {
+    "shipment_id": "SHP-1002",
+    "timestamp": "2026-09-14T20:00:00Z",
+    "temperature_c": 5.2,
+    "asset_id": "FLT-TRK-701",
+    "humidity_pct": 53.0,
+    "ambient_temp_c": -12.0,
+    "battery_level_pct": 89.0,
+    "door_opened": false,
+    "location": {
+      "latitude": 41.6780,
+      "longitude": -86.2800
+    },
+    "sensor_id": "SNS-CC-0941"
+  },
+  {
+    "shipment_id": "SHP-1002",
+    "timestamp": "2026-09-14T21:00:00Z",
+    "temperature_c": 6.8,
+    "asset_id": "FLT-TRK-701",
+    "humidity_pct": 56.0,
+    "ambient_temp_c": -16.0,
+    "battery_level_pct": 84.0,
+    "door_opened": false,
+    "location": {
+      "latitude": 41.6810,
+      "longitude": -86.3200
+    },
+    "sensor_id": "SNS-CC-0941"
+  },
+  {
+    "shipment_id": "SHP-1002",
+    "timestamp": "2026-09-14T21:30:00Z",
+    "temperature_c": 8.4,
+    "asset_id": "FLT-TRK-701",
+    "humidity_pct": 59.0,
+    "ambient_temp_c": -17.5,
+    "battery_level_pct": 81.0,
+    "door_opened": false,
+    "location": {
+      "latitude": 41.6810,
+      "longitude": -86.3200
+    },
+    "sensor_id": "SNS-CC-0941"
+  },
+  {
+    "shipment_id": "SHP-1002",
+    "timestamp": "2026-09-14T22:00:00Z",
+    "temperature_c": 8.7,
+    "asset_id": "FLT-TRK-701",
+    "humidity_pct": 60.0,
+    "ambient_temp_c": -18.0,
+    "battery_level_pct": 77.0,
+    "door_opened": false,
+    "location": {
+      "latitude": 41.6810,
+      "longitude": -86.3200
+    },
+    "sensor_id": "SNS-CC-0941"
+  },
+  {
+    "shipment_id": "SHP-1002",
+    "timestamp": "2026-09-14T22:30:00Z",
+    "temperature_c": 7.4,
+    "asset_id": "FLT-TRK-701",
+    "humidity_pct": 55.0,
+    "ambient_temp_c": -18.0,
+    "battery_level_pct": 74.0,
+    "door_opened": false,
+    "location": {
+      "latitude": 41.6810,
+      "longitude": -86.3200
+    },
+    "sensor_id": "SNS-CC-0941"
+  },
+  {
+    "shipment_id": "SHP-1005",
+    "timestamp": "2026-09-14T14:00:00Z",
+    "temperature_c": 4.0,
+    "asset_id": "FLT-TRK-550",
+    "humidity_pct": 45.0,
+    "ambient_temp_c": 12.0,
+    "battery_level_pct": 92.0,
+    "door_opened": false,
+    "location": {
+      "latitude": 40.8000,
+      "longitude": -82.5000
+    },
+    "sensor_id": "SNS-CC-3108"
+  },
+  {
+    "shipment_id": "SHP-1005",
+    "timestamp": "2026-09-14T15:00:00Z",
+    "temperature_c": 4.2,
+    "asset_id": "FLT-TRK-550",
+    "humidity_pct": 46.0,
+    "ambient_temp_c": 10.0,
+    "battery_level_pct": 88.0,
+    "door_opened": false,
+    "location": {
+      "latitude": 41.1500,
+      "longitude": -84.2000
+    },
+    "sensor_id": "SNS-CC-3108"
+  },
+  {
+    "shipment_id": "SHP-1005",
+    "timestamp": "2026-09-14T16:00:00Z",
+    "temperature_c": 7.9,
+    "asset_id": "FLT-TRK-550",
+    "humidity_pct": 52.0,
+    "ambient_temp_c": 8.0,
+    "battery_level_pct": 54.0,
+    "door_opened": false,
+    "location": {
+      "latitude": 41.4500,
+      "longitude": -86.1000
+    },
+    "sensor_id": "SNS-CC-3108"
+  },
+  {
+    "shipment_id": "SHP-1005",
+    "timestamp": "2026-09-14T16:30:00Z",
+    "temperature_c": 10.5,
+    "asset_id": "FLT-TRK-550",
+    "humidity_pct": 62.0,
+    "ambient_temp_c": 6.0,
+    "battery_level_pct": 32.0,
+    "door_opened": false,
+    "location": {
+      "latitude": 41.5500,
+      "longitude": -86.9000
+    },
+    "sensor_id": "SNS-CC-3108"
+  },
+  {
+    "shipment_id": "SHP-1005",
+    "timestamp": "2026-09-14T17:00:00Z",
+    "temperature_c": 13.8,
+    "asset_id": "FLT-TRK-550",
+    "humidity_pct": 71.0,
+    "ambient_temp_c": 4.0,
+    "battery_level_pct": 21.0,
+    "door_opened": true,
+    "location": {
+      "latitude": 41.5934,
+      "longitude": -87.3465
+    },
+    "sensor_id": "SNS-CC-3108"
+  },
+  {
+    "shipment_id": "SHP-1005",
+    "timestamp": "2026-09-14T17:30:00Z",
+    "temperature_c": 16.4,
+    "asset_id": "FLT-TRK-550",
+    "humidity_pct": 78.0,
+    "ambient_temp_c": 3.0,
+    "battery_level_pct": 14.0,
+    "door_opened": true,
+    "location": {
+      "latitude": 41.6020,
+      "longitude": -87.4100
+    },
+    "sensor_id": "SNS-CC-3108"
+  },
+  {
+    "shipment_id": "SHP-1005",
+    "timestamp": "2026-09-14T18:00:00Z",
+    "temperature_c": 18.2,
+    "asset_id": "FLT-TRK-550",
+    "humidity_pct": 82.0,
+    "ambient_temp_c": 2.0,
+    "battery_level_pct": 8.0,
+    "door_opened": true,
+    "location": {
+      "latitude": 41.6020,
+      "longitude": -87.4100
+    },
+    "sensor_id": "SNS-CC-3108"
+  }
+]
