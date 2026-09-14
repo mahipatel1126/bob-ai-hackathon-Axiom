@@ -1,0 +1,13 @@
+# Chain Guard AI - Hackathon Submission Details
+name: Chain Guard AI
+tagline: AI-Powered Supply Chain Risk & Optimization Platform
+version: "1.0.0"
+team:
+  name: Chain Guard Team
+  members: []
+technologies:
+  - Python
+  - FastAPI / Flask
+  - React / Next.js
+  - IBM watsonx / Cloud
+  - Machine Learning
