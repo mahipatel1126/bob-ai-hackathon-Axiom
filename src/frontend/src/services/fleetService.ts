@@ -4,14 +4,20 @@ import { mockFleetAssets } from '../mock/fleetData';
 
 export const fleetService = {
   async getFleetAssets(): Promise<FleetAsset[]> {
-    return apiClient<FleetAsset[]>('/fleet/assets', {}, mockFleetAssets);
+    const res = await apiClient<any>('/fleet/assets', {}, mockFleetAssets);
+    if (Array.isArray(res)) return res;
+    if (res && Array.isArray(res.assets)) return res.assets;
+    return mockFleetAssets;
   },
 
   async getRecommendedAssets(shipmentId: string): Promise<FleetAsset[]> {
     const recommended = mockFleetAssets.filter(
       (a) => a.is_recommended || a.recommended_shipment_id === shipmentId
     );
-    return apiClient<FleetAsset[]>(`/fleet/recommendations?shipment_id=${shipmentId}`, {}, recommended);
+    const res = await apiClient<any>(`/fleet/recommendations?shipment_id=${shipmentId}`, {}, recommended);
+    if (Array.isArray(res)) return res;
+    if (res && Array.isArray(res.candidates)) return res.candidates;
+    return recommended;
   },
 
   async assignAsset(assetId: string, shipmentId: string): Promise<{ success: boolean; message: string }> {
@@ -28,3 +34,4 @@ export const fleetService = {
     );
   },
 };
+

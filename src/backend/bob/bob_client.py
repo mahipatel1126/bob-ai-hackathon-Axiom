@@ -70,6 +70,194 @@ class BobClient:
             "dispatch_order_prepared": full_briefing.get("dispatch_order_prepared"),
         }
 
+    def ask_bob(self, query: str, context_shipment_id: Optional[str] = None) -> Dict[str, Any]:
+        """Process an operational inquiry from a logistics operator and return a load-bearing briefing."""
+        # 1. Identify target shipment from context or query text
+        target_id = context_shipment_id
+        if not target_id:
+            # Check for known shipment patterns in query
+            all_shipments = data_loader.get_shipments()
+            for s in all_shipments:
+                sid = s.get("shipment_id", "")
+                if sid.lower() in query.lower():
+                    target_id = sid
+                    break
+        
+        # Default to highest priority distressed shipment if not specified
+        if not target_id:
+            affected = disruption_service.get_affected_shipments()
+            if affected:
+                target_id = affected[0].get("shipment_id", "SHP-1002")
+            else:
+                target_id = "SHP-1002"
+
+        # 2. If live IBM watsonx / Bob credentials exist, execute live cognitive call
+        if self.has_credentials:
+            try:
+                summary = incident_service.build_incident_summary(target_id)
+                summary["user_query"] = query
+                return self._call_external_bob(summary)
+            except Exception as e:
+                return self._synthesize_conversational_response(query, target_id, error=str(e))
+        else:
+            return self._synthesize_conversational_response(query, target_id)
+
+    def _synthesize_conversational_response(
+        self, query: str, shipment_id: str, error: Optional[str] = None
+    ) -> Dict[str, Any]:
+        """Synthesize a structured conversational response using deterministic AI engine state."""
+        try:
+            summary = incident_service.build_incident_summary(shipment_id)
+        except Exception:
+            summary = {}
+
+        shipment = summary.get("shipment", {})
+        disruption = summary.get("disruption")
+        cold_chain = summary.get("cold_chain", {})
+        reroute = summary.get("reroute_recommendation", {})
+        fleet_candidates = summary.get("redeployment_candidates", [])
+        exec_assess = summary.get("executive_assessment", {})
+
+        q_lower = query.lower()
+        now_str = datetime.now(timezone.utc).strftime("%H:%M UTC")
+
+        # Contextual response logic
+        content_parts = []
+        structured_rec = None
+        suggested_actions = []
+
+        if "why" in q_lower or "critical" in q_lower or "risk" in q_lower:
+            content_parts.append(
+                f"Incident Analysis for {shipment_id} ({shipment.get('cargo_name', 'Cargo')}):"
+            )
+            if disruption:
+                content_parts.append(
+                    f"• Obstruction: {disruption.get('disruption_title')} ({disruption.get('disruption_severity')}). {disruption.get('impact_reason')}"
+                )
+            if cold_chain.get("excursion_detected"):
+                content_parts.append(
+                    f"• Thermal Breach: Peak temperature {cold_chain.get('max_temperature_c')}°C exceeds {cold_chain.get('target_range')} threshold ({cold_chain.get('severity')} severity). Cumulative excursion: {cold_chain.get('total_excursion_duration_minutes')} mins."
+                )
+            
+            structured_rec = {
+                "priority": "CRITICAL" if exec_assess.get("overall_risk_level") == "CRITICAL" else "HIGH",
+                "shipment_id": shipment_id,
+                "reason": disruption.get("disruption_title", "Transit hazard") if disruption else "Cold chain breach",
+                "recommended_action": f"Execute corridor bypass via '{reroute.get('recommended_route_id', 'Alternative Route')}' and enforce destination quarantine review.",
+                "operational_impact": f"Saves {reroute.get('delay_hours_saved', 0.0)}h in transit delay and mitigates temperature excursion.",
+            }
+            suggested_actions = [
+                f"Inspect {shipment_id} Audit Dossier",
+                "Approve Alternate Reroute",
+                "Dispatch Standby Reefer",
+            ]
+
+        elif "route" in q_lower or "reroute" in q_lower or "corridor" in q_lower:
+            route_id = reroute.get("recommended_route_id", "ALT-01")
+            delay_saved = reroute.get("delay_hours_saved", 0.0)
+            content_parts.append(
+                f"Routing Optimization Analysis for {shipment_id}: {reroute.get('rationale', 'Alternative bypass route evaluated.')}"
+            )
+            content_parts.append(
+                f"Projected impact: Avoids active hazard corridor, saving {delay_saved} hours of transit delay."
+            )
+            structured_rec = {
+                "priority": "HIGH",
+                "shipment_id": shipment_id,
+                "reason": "Active corridor disruption avoidance",
+                "recommended_action": f"Authorize dispatch order via {route_id}.",
+                "operational_impact": f"Estimated transit savings: {delay_saved}h.",
+            }
+            suggested_actions = [
+                "Authorize Reroute Order",
+                "Notify Receiving Facility",
+                "View Route Comparison Map",
+            ]
+
+        elif "fleet" in q_lower or "redeploy" in q_lower or "truck" in q_lower or "asset" in q_lower or "idle" in q_lower:
+            if fleet_candidates:
+                top_asset = fleet_candidates[0]
+                content_parts.append(
+                    f"Fleet Redeployment Recommendation: Standby asset {top_asset.get('asset_id')} ({top_asset.get('asset_name')}) is currently IDLE at {top_asset.get('current_location', {}).get('name', 'Depot')}, {top_asset.get('distance_km'):.1f} km away."
+                )
+                content_parts.append(
+                    f"Compatibility verified: Weight capacity {top_asset.get('capacity_match')} | Cold-chain compliant {top_asset.get('reefer_match')}. Assigned standby driver: {top_asset.get('available_driver')}."
+                )
+                structured_rec = {
+                    "priority": "HIGH",
+                    "shipment_id": shipment_id,
+                    "reason": "Refrigeration backup and cargo rescue dispatch",
+                    "recommended_action": f"Issue autonomous redeployment order for {top_asset.get('asset_id')}.",
+                    "operational_impact": "Prevents product degradation and maintains customer SLA.",
+                }
+                suggested_actions = [
+                    f"Dispatch {top_asset.get('asset_id')}",
+                    "View Driver Telemetry",
+                    "Acknowledge Fleet Alert",
+                ]
+            else:
+                content_parts.append("Fleet analysis: All nearby fleet assets are currently deployed or undergoing maintenance.")
+                structured_rec = {
+                    "priority": "MEDIUM",
+                    "shipment_id": shipment_id,
+                    "reason": "No proximate idle assets within 600km radius",
+                    "recommended_action": "Request 3PL secondary carrier spot quote.",
+                    "operational_impact": "Ensures continuity through external carrier network.",
+                }
+
+        elif "cold" in q_lower or "temp" in q_lower or "telemetry" in q_lower or "excursion" in q_lower:
+            content_parts.append(
+                f"Thermal Telemetry & Compliance Review for {shipment_id}: Recorded max temperature of {cold_chain.get('max_temperature_c', 'N/A')}°C vs specification {cold_chain.get('target_range', '2-8°C')}."
+            )
+            content_parts.append(
+                f"Regulatory Classification: {cold_chain.get('compliance_status', 'COMPLIANT')} ({cold_chain.get('regulatory_framework', 'FDA 21 CFR 211')}). Directive: {cold_chain.get('recommended_action', 'Continue standard monitoring.')}"
+            )
+            structured_rec = {
+                "priority": "CRITICAL" if cold_chain.get("severity") == "CRITICAL" else "HIGH",
+                "shipment_id": shipment_id,
+                "reason": f"Thermal integrity excursion ({cold_chain.get('severity')})",
+                "recommended_action": cold_chain.get("recommended_action", "Enforce QA quarantine hold."),
+                "operational_impact": "Prevents adulterated biologics from clinical distribution.",
+            }
+            suggested_actions = [
+                f"Generate FDA 21 CFR 211 Audit Dossier",
+                "Enforce Quarantine Hold",
+                "Dispatch Backup Reefer",
+            ]
+
+        else:
+            content_parts.append(
+                f"Operations Copilot Intelligence Briefing: Monitoring active supply chain network state. Current focus on {shipment_id} ({shipment.get('cargo_name', 'Biologics')})."
+            )
+            if disruption:
+                content_parts.append(f"Primary transit hazard: {disruption.get('disruption_title')}.")
+            content_parts.append(f"Executive assessment: {exec_assess.get('narrative_summary', 'All corridors actively monitored.')}")
+            structured_rec = {
+                "priority": exec_assess.get("overall_risk_level", "MEDIUM"),
+                "shipment_id": shipment_id,
+                "reason": "Network disruption and risk containment",
+                "recommended_action": exec_assess.get("primary_action_required", "Review active recommendations."),
+                "operational_impact": "Maintains network-wide supply chain resilience.",
+            }
+            suggested_actions = [
+                "Review Critical Shipments",
+                "View Disruption Map",
+                "Optimize Fleet Allocation",
+            ]
+
+        return {
+            "id": f"bob-{datetime.now(timezone.utc).timestamp()}",
+            "sender": "BOB",
+            "timestamp": now_str,
+            "source": "ibm_bob_local_engine",
+            "bob_connected": False,
+            "is_simulated": True,
+            "content": "\n\n".join(content_parts),
+            "structured_recommendation": structured_rec,
+            "suggested_actions": suggested_actions,
+            "context_shipment_id": shipment_id,
+        }
+
     def _generate_local_fallback(self, summary: Dict[str, Any]) -> Dict[str, Any]:
         """Deterministic local briefing generator mimicking IBM Bob reasoning."""
         shipment = summary.get("shipment", {})
@@ -163,7 +351,6 @@ class BobClient:
 
     def _call_external_bob(self, summary: Dict[str, Any]) -> Dict[str, Any]:
         """Execute a real API call to IBM Bob / watsonx when credentials are provided."""
-        # Clean external caller using standard urllib.request
         import urllib.request
         import urllib.error
 
@@ -199,3 +386,4 @@ class BobClient:
 
 # Default global instance
 default_bob_client = BobClient()
+

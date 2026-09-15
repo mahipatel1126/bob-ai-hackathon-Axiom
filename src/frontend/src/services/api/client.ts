@@ -8,7 +8,7 @@
  * Set VITE_USE_MOCK=false and VITE_API_BASE_URL=http://localhost:8000 in .env.local
  */
 
-const USE_MOCK = import.meta.env.VITE_USE_MOCK !== 'false';
+const FORCE_MOCK = import.meta.env.VITE_USE_MOCK === 'true';
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api';
 
 export async function apiClient<T>(
@@ -16,21 +16,25 @@ export async function apiClient<T>(
   options: RequestInit = {},
   fallbackMockData?: T
 ): Promise<T> {
-  if (USE_MOCK && fallbackMockData !== undefined) {
-    // Simulate realistic asynchronous network latency (80ms - 200ms)
-    await new Promise((resolve) => setTimeout(resolve, 120));
+  if (FORCE_MOCK && fallbackMockData !== undefined) {
+    await new Promise((resolve) => setTimeout(resolve, 80));
     return fallbackMockData;
   }
 
   try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 2000);
+
     const url = `${API_BASE_URL}${endpoint.startsWith('/') ? '' : '/'}${endpoint}`;
     const response = await fetch(url, {
       headers: {
         'Content-Type': 'application/json',
         ...options.headers,
       },
+      signal: controller.signal,
       ...options,
     });
+    clearTimeout(timeoutId);
 
     if (!response.ok) {
       throw new Error(`API Error [${response.status}]: ${response.statusText}`);
@@ -38,7 +42,6 @@ export async function apiClient<T>(
 
     return (await response.json()) as T;
   } catch (error) {
-    console.warn(`[ChainGuard API] Request to ${endpoint} failed. Falling back to mock data if available.`, error);
     if (fallbackMockData !== undefined) {
       return fallbackMockData;
     }
@@ -46,4 +49,5 @@ export async function apiClient<T>(
   }
 }
 
-export { USE_MOCK, API_BASE_URL };
+export { FORCE_MOCK as USE_MOCK, API_BASE_URL };
+

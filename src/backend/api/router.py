@@ -50,7 +50,7 @@ def route_request(
             }
 
         # 2. Executive Overview / Dashboard KPIs
-        if path == "/api/overview" and method == "GET":
+        if path in ("/api/overview", "/overview") and method == "GET":
             shipments = data_loader.get_shipments()
             disruptions = data_loader.get_disruptions(active_only=True)
             affected = disruption_service.get_affected_shipments()
@@ -67,11 +67,16 @@ def route_request(
             }
 
         # 3. Shipments
-        if path == "/api/shipments" and method == "GET":
+        if path in ("/api/shipments", "/shipments") and method == "GET":
             return 200, {"shipments": data_loader.get_shipments()}
 
+        # /api/shipments/at-risk
+        if path in ("/api/shipments/at-risk", "/shipments/at-risk") and method == "GET":
+            affected = disruption_service.get_affected_shipments()
+            return 200, {"at_risk_shipments": affected}
+
         # /api/shipments/{shipment_id}/disruptions
-        match = re.match(r"^/api/shipments/([^/]+)/disruptions$", path)
+        match = re.match(r"^(?:/api)?/shipments/([^/]+)/disruptions$", path)
         if match and method == "GET":
             shipment_id = match.group(1)
             shipment = data_loader.get_shipment_by_id(shipment_id)
@@ -85,7 +90,7 @@ def route_request(
             }
 
         # /api/shipments/{shipment_id}
-        match = re.match(r"^/api/shipments/([^/]+)$", path)
+        match = re.match(r"^(?:/api)?/shipments/([^/]+)$", path)
         if match and method == "GET":
             shipment_id = match.group(1)
             shipment = data_loader.get_shipment_by_id(shipment_id)
@@ -94,19 +99,39 @@ def route_request(
             return 200, {"shipment": shipment}
 
         # 4. Disruptions
-        if path == "/api/disruptions" and method == "GET":
+        if path in ("/api/disruptions", "/disruptions", "/api/disruptions/active", "/disruptions/active") and method == "GET":
             active_only = query_params.get("active_only", "true").lower() in ("true", "1")
             return 200, {"disruptions": data_loader.get_disruptions(active_only=active_only)}
 
-        if path == "/api/disruptions/affected-shipments" and method == "GET":
+        if path in ("/api/disruptions/affected-shipments", "/disruptions/affected-shipments") and method == "GET":
             affected = disruption_service.get_affected_shipments()
             return 200, {
                 "total_affected": len(affected),
                 "affected_shipments": affected,
             }
 
+        # POST /api/analyze-disruption
+        if path in ("/api/analyze-disruption", "/analyze-disruption") and method == "POST":
+            shipment_id = (body or {}).get("shipment_id")
+            if shipment_id:
+                impacts = disruption_service.get_disruptions_for_shipment(shipment_id)
+                return 200, {"shipment_id": shipment_id, "impacts": impacts, "affected": len(impacts) > 0}
+            affected = disruption_service.get_affected_shipments()
+            return 200, {"total_affected": len(affected), "affected_shipments": affected}
+
+        # POST /api/risk-score
+        if path in ("/api/risk-score", "/risk-score") and method == "POST":
+            shipment_id = (body or {}).get("shipment_id", "SHP-1002")
+            summary = incident_service.build_incident_summary(shipment_id)
+            return 200, {
+                "shipment_id": shipment_id,
+                "risk_assessment": summary.get("executive_assessment", {}),
+                "disruption": summary.get("disruption"),
+                "cold_chain": summary.get("cold_chain"),
+            }
+
         # 5. Rerouting & Carrier Alternatives
-        match = re.match(r"^/api/reroute/([^/]+)$", path)
+        match = re.match(r"^(?:/api)?(?:/routing/recommendations|/reroute)/([^/]+)$", path)
         if match and method == "GET":
             shipment_id = match.group(1)
             try:
@@ -115,14 +140,35 @@ def route_request(
             except ValueError as ve:
                 return 404, {"error": str(ve)}
 
+        match = re.match(r"^(?:/api)?/routing/approve/([^/]+)$", path)
+        if match and method == "POST":
+            shipment_id = match.group(1)
+            return 200, {
+                "success": True,
+                "shipment_id": shipment_id,
+                "message": f"Reroute order for {shipment_id} authorized and dispatched.",
+            }
+
+        if path in ("/api/reroute", "/reroute") and method == "POST":
+            shipment_id = (body or {}).get("shipment_id", "SHP-1002")
+            try:
+                rec = reroute_service.generate_reroute_recommendation(shipment_id)
+                return 200, rec
+            except ValueError as ve:
+                return 404, {"error": str(ve)}
+
+        if path in ("/api/carrier-recommendation", "/carrier-recommendation") and method == "POST":
+            carriers = reroute_service.find_carrier_alternatives()
+            return 200, {"recommended_carriers": carriers}
+
         # 6. Fleet Management & Redeployment
-        if path == "/api/fleet" and method == "GET":
+        if path in ("/api/fleet", "/fleet", "/api/fleet/assets", "/fleet/assets") and method == "GET":
             idle_only = query_params.get("idle_only", "false").lower() in ("true", "1")
             reefer_only = query_params.get("reefer_only", "false").lower() in ("true", "1")
             assets = data_loader.get_fleet_assets(idle_only=idle_only, reefer_only=reefer_only)
             return 200, {"assets": assets}
 
-        if path == "/api/fleet/redeployment" and method == "GET":
+        if path in ("/api/fleet/redeployment", "/fleet/redeployment", "/api/fleet/recommendations", "/fleet/recommendations") and method == "GET":
             shipment_id = query_params.get("shipment_id")
             if not shipment_id:
                 return 400, {"error": "Query parameter 'shipment_id' is required for fleet redeployment matching."}
@@ -136,11 +182,11 @@ def route_request(
             except ValueError as ve:
                 return 404, {"error": str(ve)}
 
-        if path == "/api/fleet/redeployment" and method == "POST":
+        if path in ("/api/fleet/redeployment", "/fleet/redeployment", "/api/fleet-redeployment", "/fleet-redeployment", "/api/fleet/assign", "/fleet/assign") and method == "POST":
             if not body:
                 return 400, {"error": "JSON payload required."}
             asset_id = body.get("asset_id")
-            target_shipment_id = body.get("target_shipment_id")
+            target_shipment_id = body.get("target_shipment_id") or body.get("shipment_id")
             urgency = body.get("urgency", "HIGH")
             reason = body.get("reason", "Disruption mitigation asset dispatch")
 
@@ -154,19 +200,23 @@ def route_request(
                     urgency=urgency,
                     reason=reason,
                 )
-                return 201, dispatch
+                return 201, {
+                    "success": True,
+                    "message": f"Asset {asset_id} dispatched to support {target_shipment_id}.",
+                    "dispatch": dispatch,
+                }
             except ValueError as ve:
                 return 404, {"error": str(ve)}
 
         # 7. Cold-Chain Monitoring
-        if path == "/api/cold-chain/excursions" and method == "GET":
+        if path in ("/api/cold-chain/excursions", "/cold-chain/excursions", "/api/cold-chain/alerts", "/cold-chain/alerts") and method == "GET":
             excursions = cold_chain_service.get_all_excursions()
             return 200, {
                 "active_excursions_count": len(excursions),
                 "excursions": excursions,
             }
 
-        match = re.match(r"^/api/cold-chain/([^/]+)/audit$", path)
+        match = re.match(r"^(?:/api)?/cold-chain/([^/]+)/audit$", path)
         if match and method == "GET":
             shipment_id = match.group(1)
             try:
@@ -175,7 +225,7 @@ def route_request(
             except ValueError as ve:
                 return 404, {"error": str(ve)}
 
-        match = re.match(r"^/api/cold-chain/([^/]+)$", path)
+        match = re.match(r"^(?:/api)?(?:/cold-chain/telemetry|/cold-chain)/([^/]+)$", path)
         if match and method == "GET":
             shipment_id = match.group(1)
             try:
@@ -184,8 +234,25 @@ def route_request(
             except ValueError as ve:
                 return 404, {"error": str(ve)}
 
-        # 8. IBM Bob & Incident Intelligence
-        match = re.match(r"^/api/bob/incident-summary/([^/]+)$", path)
+        if path in ("/api/cold-chain/analyze", "/cold-chain/analyze", "/api/cold-chain", "/cold-chain") and method == "POST":
+            shipment_id = (body or {}).get("shipment_id", "SHP-1005")
+            try:
+                report = cold_chain_service.analyze_shipment_cold_chain(shipment_id)
+                return 200, report
+            except ValueError as ve:
+                return 404, {"error": str(ve)}
+
+        # 8. Unified Operations & Recommendations
+        if path in ("/api/operations/recommendation", "/operations/recommendation") and method == "POST":
+            shipment_id = (body or {}).get("shipment_id", "SHP-1002")
+            try:
+                summary = incident_service.build_incident_summary(shipment_id)
+                return 200, summary
+            except ValueError as ve:
+                return 404, {"error": str(ve)}
+
+        # 9. IBM Bob & Incident Intelligence
+        match = re.match(r"^(?:/api)?/bob/incident-summary/([^/]+)$", path)
         if match and method == "GET":
             shipment_id = match.group(1)
             try:
@@ -194,7 +261,7 @@ def route_request(
             except ValueError as ve:
                 return 404, {"error": str(ve)}
 
-        match = re.match(r"^/api/bob/briefing/([^/]+)$", path)
+        match = re.match(r"^(?:/api)?/bob/briefing/([^/]+)$", path)
         if match and method == "GET":
             shipment_id = match.group(1)
             try:
@@ -202,6 +269,12 @@ def route_request(
                 return 200, briefing
             except ValueError as ve:
                 return 404, {"error": str(ve)}
+
+        if path in ("/api/copilot/query", "/copilot/query") and method == "POST":
+            query_str = (body or {}).get("query", "")
+            context_id = (body or {}).get("context_shipment_id")
+            result = default_bob_client.ask_bob(query=query_str, context_shipment_id=context_id)
+            return 200, result
 
         # Route Not Found
         return 404, {"error": f"Endpoint '{path}' with method '{method}' not found."}

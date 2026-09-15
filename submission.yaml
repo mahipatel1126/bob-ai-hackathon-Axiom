@@ -1,13 +1,21 @@
-# Chain Guard AI - Hackathon Submission Details
+# Chain Guard AI - IBM Bob AI Innovation Hackathon 2026 Submission
 name: Chain Guard AI
-tagline: AI-Powered Supply Chain Risk & Optimization Platform
+tagline: AI-Powered Supply Chain Risk Intelligence & Fleet Optimization
+problem_statement: L2 Supply Chain Disruption Assistant & Fleet Utilisation Optimizer
 version: "1.0.0"
+repository: "https://github.com/mahipatel1126/bob-ai-hackathon-Axiom"
+branch: "feature/ai-optimization"
 team:
-  name: Chain Guard Team
-  members: []
+  name: Axiom Team
+  members:
+    # Team members to be verified by submitter
+    - name: Mahi Patel
+      role: Team Lead / Integration Engineer
 technologies:
-  - Python
-  - FastAPI / Flask
-  - React / Next.js
-  - IBM watsonx / Cloud
-  - Machine Learning
+  - Python 3.12
+  - FastAPI / Python Standard HTTP
+  - React 18 / TypeScript / Vite / TailwindCSS
+  - Google OR-Tools (Mixed-Integer Linear Programming / SCIP)
+  - IBM Bob / watsonx Cognitive Integration
+  - Great-Circle Haversine Geospatial Spatial Analysis
+  - FDA 21 CFR Part 211 / WHO GDP Thermal Telemetry Validation

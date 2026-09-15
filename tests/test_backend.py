@@ -203,6 +203,51 @@ class TestChainGuardBackend(unittest.TestCase):
         self.assertEqual(status, 404)
         self.assertIn("error", data)
 
+    # 21. Copilot Query Endpoint
+    def test_21_copilot_query_endpoint(self):
+        status, data = route_request("POST", "/api/copilot/query", {"query": "Why is SHP-1002 critical?", "context_shipment_id": "SHP-1002"})
+        self.assertEqual(status, 200)
+        self.assertEqual(data["sender"], "BOB")
+        self.assertIn("content", data)
+        self.assertIsNotNone(data.get("structured_recommendation"))
+
+    # 22. POST Analyze Disruption Endpoint
+    def test_22_post_analyze_disruption(self):
+        status, data = route_request("POST", "/api/analyze-disruption", {"shipment_id": "SHP-1002"})
+        self.assertEqual(status, 200)
+        self.assertTrue(data.get("affected"))
+
+    # 23. POST Risk Score Endpoint
+    def test_23_post_risk_score(self):
+        status, data = route_request("POST", "/api/risk-score", {"shipment_id": "SHP-1002"})
+        self.assertEqual(status, 200)
+        self.assertIn("risk_assessment", data)
+
+    # 24. POST Reroute Endpoint
+    def test_24_post_reroute(self):
+        status, data = route_request("POST", "/api/reroute", {"shipment_id": "SHP-1002"})
+        self.assertEqual(status, 200)
+        self.assertIsNotNone(data.get("recommended_route_id"))
+
+    # 25. POST Carrier Recommendation Endpoint
+    def test_25_post_carrier_recommendation(self):
+        status, data = route_request("POST", "/api/carrier-recommendation", {})
+        self.assertEqual(status, 200)
+        self.assertIn("recommended_carriers", data)
+
+    # 26. POST Cold Chain Analyze Endpoint
+    def test_26_post_cold_chain_analyze(self):
+        status, data = route_request("POST", "/api/cold-chain/analyze", {"shipment_id": "SHP-1005"})
+        self.assertEqual(status, 200)
+        self.assertEqual(data.get("severity"), "CRITICAL")
+
+    # 27. POST Unified Operational Recommendation Endpoint
+    def test_27_post_operations_recommendation(self):
+        status, data = route_request("POST", "/api/operations/recommendation", {"shipment_id": "SHP-1002"})
+        self.assertEqual(status, 200)
+        self.assertIn("executive_assessment", data)
+
 
 if __name__ == "__main__":
     unittest.main()
+

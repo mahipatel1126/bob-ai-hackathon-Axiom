@@ -3,10 +3,12 @@ __pycache__/
 *.py[cod]
 *$py.class
 *.env
+.env*
 .venv/
 env/
 venv/
 *.log
+.pytest_cache/
 
 # Node / Frontend
 node_modules/
@@ -19,3 +21,4 @@ build/
 .idea/
 .DS_Store
 Thumbs.db
+

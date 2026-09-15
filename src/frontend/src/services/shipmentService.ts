@@ -4,16 +4,25 @@ import { mockShipments } from '../mock/shipmentsData';
 
 export const shipmentService = {
   async getShipments(): Promise<Shipment[]> {
-    return apiClient<Shipment[]>('/shipments', {}, mockShipments);
+    const res = await apiClient<any>('/shipments', {}, mockShipments);
+    if (Array.isArray(res)) return res;
+    if (res && Array.isArray(res.shipments)) return res.shipments;
+    return mockShipments;
   },
 
   async getShipmentById(id: string): Promise<Shipment | null> {
     const found = mockShipments.find((s) => s.shipment_id === id) || null;
-    return apiClient<Shipment | null>(`/shipments/${id}`, {}, found);
+    const res = await apiClient<any>(`/shipments/${id}`, {}, found);
+    if (res && res.shipment) return res.shipment;
+    return res || found;
   },
 
   async getAtRiskShipments(): Promise<Shipment[]> {
     const atRisk = mockShipments.filter((s) => s.risk_level === 'CRITICAL' || s.risk_level === 'HIGH');
-    return apiClient<Shipment[]>('/shipments/at-risk', {}, atRisk);
+    const res = await apiClient<any>('/shipments/at-risk', {}, atRisk);
+    if (Array.isArray(res)) return res;
+    if (res && Array.isArray(res.at_risk_shipments)) return res.at_risk_shipments;
+    return atRisk;
   },
 };
+
