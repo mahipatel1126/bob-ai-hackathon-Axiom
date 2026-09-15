@@ -1,0 +1,401 @@
+[
+  {
+    "shipment_id": "SHP-1001",
+    "origin": {
+      "name": "Austin Semiconductor Foundry",
+      "city": "Austin",
+      "country": "USA",
+      "coordinates": {
+        "latitude": 30.2672,
+        "longitude": -97.7431
+      },
+      "facility_type": "MANUFACTURING_PLANT"
+    },
+    "destination": {
+      "name": "Silicon Valley Distribution Center",
+      "city": "San Jose",
+      "country": "USA",
+      "coordinates": {
+        "latitude": 37.3382,
+        "longitude": -121.8863
+      },
+      "facility_type": "DISTRIBUTION_CENTER"
+    },
+    "carrier": "Silicon Express Logistics",
+    "status": "IN_TRANSIT",
+    "cargo": {
+      "product_name": "Automotive Microcontrollers & Sensor Chips",
+      "cargo_type": "ELECTRONICS",
+      "weight_kg": 3400.0,
+      "volume_cbm": 12.0,
+      "value_usd": 420000.0,
+      "is_hazardous": false
+    },
+    "temperature_requirement": {
+      "is_required": false,
+      "min_temp_c": null,
+      "max_temp_c": null,
+      "target_temp_c": null,
+      "tolerance_duration_minutes": 0
+    },
+    "route_waypoints": [
+      {
+        "name": "Austin Origin Gate",
+        "coordinates": { "latitude": 30.2672, "longitude": -97.7431 },
+        "estimated_arrival": "2026-09-14T08:00:00Z",
+        "actual_arrival": "2026-09-14T08:15:00Z",
+        "is_passed": true
+      },
+      {
+        "name": "El Paso Intermodal Checkpoint",
+        "coordinates": { "latitude": 31.7619, "longitude": -106.4850 },
+        "estimated_arrival": "2026-09-14T19:00:00Z",
+        "actual_arrival": "2026-09-14T19:10:00Z",
+        "is_passed": true
+      },
+      {
+        "name": "Tucson Transit Hub",
+        "coordinates": { "latitude": 32.2226, "longitude": -110.9747 },
+        "estimated_arrival": "2026-09-15T02:00:00Z",
+        "actual_arrival": null,
+        "is_passed": false
+      },
+      {
+        "name": "San Jose Receiving Dock",
+        "coordinates": { "latitude": 37.3382, "longitude": -121.8863 },
+        "estimated_arrival": "2026-09-15T22:00:00Z",
+        "actual_arrival": null,
+        "is_passed": false
+      }
+    ],
+    "current_location": {
+      "latitude": 31.8500,
+      "longitude": -107.1200
+    },
+    "eta": "2026-09-15T22:00:00Z",
+    "created_at": "2026-09-14T06:30:00Z",
+    "updated_at": "2026-09-14T20:00:00Z"
+  },
+  {
+    "shipment_id": "SHP-1002",
+    "origin": {
+      "name": "Boston BioPharma Laboratories",
+      "city": "Boston",
+      "country": "USA",
+      "coordinates": {
+        "latitude": 42.3601,
+        "longitude": -71.0589
+      },
+      "facility_type": "PHARMA_LAB"
+    },
+    "destination": {
+      "name": "Rocky Mountain Regional Hospital Depot",
+      "city": "Denver",
+      "country": "USA",
+      "coordinates": {
+        "latitude": 39.7392,
+        "longitude": -104.9903
+      },
+      "facility_type": "HOSPITAL_DEPOT"
+    },
+    "carrier": "Apex Pharma Trans",
+    "status": "DISRUPTED",
+    "cargo": {
+      "product_name": "mRNA Oncology Therapeutics & Clinical Trials",
+      "cargo_type": "PHARMACEUTICALS",
+      "weight_kg": 1150.0,
+      "volume_cbm": 4.8,
+      "value_usd": 1250000.0,
+      "is_hazardous": false
+    },
+    "temperature_requirement": {
+      "is_required": true,
+      "min_temp_c": 2.0,
+      "max_temp_c": 8.0,
+      "target_temp_c": 4.0,
+      "tolerance_duration_minutes": 30
+    },
+    "route_waypoints": [
+      {
+        "name": "Boston BioPharma Gate 2",
+        "coordinates": { "latitude": 42.3601, "longitude": -71.0589 },
+        "estimated_arrival": "2026-09-14T04:00:00Z",
+        "actual_arrival": "2026-09-14T04:10:00Z",
+        "is_passed": true
+      },
+      {
+        "name": "Cleveland I-80 Tollway Hub",
+        "coordinates": { "latitude": 41.4993, "longitude": -81.6944 },
+        "estimated_arrival": "2026-09-14T14:30:00Z",
+        "actual_arrival": "2026-09-14T15:00:00Z",
+        "is_passed": true
+      },
+      {
+        "name": "South Bend Freight Plaza",
+        "coordinates": { "latitude": 41.6764, "longitude": -86.2520 },
+        "estimated_arrival": "2026-09-14T20:00:00Z",
+        "actual_arrival": "2026-09-14T21:45:00Z",
+        "is_passed": true
+      },
+      {
+        "name": "Chicago I-80 West Gate",
+        "coordinates": { "latitude": 41.5250, "longitude": -87.8000 },
+        "estimated_arrival": "2026-09-14T23:30:00Z",
+        "actual_arrival": null,
+        "is_passed": false
+      },
+      {
+        "name": "Des Moines Transit Point",
+        "coordinates": { "latitude": 41.5868, "longitude": -93.6250 },
+        "estimated_arrival": "2026-09-15T06:00:00Z",
+        "actual_arrival": null,
+        "is_passed": false
+      },
+      {
+        "name": "Denver Hospital Receiving",
+        "coordinates": { "latitude": 39.7392, "longitude": -104.9903 },
+        "estimated_arrival": "2026-09-15T18:00:00Z",
+        "actual_arrival": null,
+        "is_passed": false
+      }
+    ],
+    "current_location": {
+      "latitude": 41.6810,
+      "longitude": -86.3200
+    },
+    "eta": "2026-09-15T18:00:00Z",
+    "created_at": "2026-09-14T03:30:00Z",
+    "updated_at": "2026-09-14T22:15:00Z"
+  },
+  {
+    "shipment_id": "SHP-1003",
+    "origin": {
+      "name": "Detroit Auto MegaFactory",
+      "city": "Detroit",
+      "country": "USA",
+      "coordinates": {
+        "latitude": 42.3314,
+        "longitude": -83.0458
+      },
+      "facility_type": "MANUFACTURING_PLANT"
+    },
+    "destination": {
+      "name": "Kansas City EV Assembly Plant",
+      "city": "Kansas City",
+      "country": "USA",
+      "coordinates": {
+        "latitude": 39.0997,
+        "longitude": -94.5786
+      },
+      "facility_type": "ASSEMBLY_PLANT"
+    },
+    "carrier": "Great Lakes Haulage",
+    "status": "DELAYED",
+    "cargo": {
+      "product_name": "Precision EV Battery Packs & Wiring Harnesses",
+      "cargo_type": "GENERAL_FREIGHT",
+      "weight_kg": 18200.0,
+      "volume_cbm": 65.0,
+      "value_usd": 380000.0,
+      "is_hazardous": false
+    },
+    "temperature_requirement": {
+      "is_required": false,
+      "min_temp_c": null,
+      "max_temp_c": null,
+      "target_temp_c": null,
+      "tolerance_duration_minutes": 0
+    },
+    "route_waypoints": [
+      {
+        "name": "Detroit Gate 4",
+        "coordinates": { "latitude": 42.3314, "longitude": -83.0458 },
+        "estimated_arrival": "2026-09-14T10:00:00Z",
+        "actual_arrival": "2026-09-14T10:20:00Z",
+        "is_passed": true
+      },
+      {
+        "name": "Kalamazoo Transit Station",
+        "coordinates": { "latitude": 42.2917, "longitude": -85.5872 },
+        "estimated_arrival": "2026-09-14T13:30:00Z",
+        "actual_arrival": "2026-09-14T14:10:00Z",
+        "is_passed": true
+      },
+      {
+        "name": "Joliet Corridor Interchange",
+        "coordinates": { "latitude": 41.5250, "longitude": -88.0817 },
+        "estimated_arrival": "2026-09-14T18:00:00Z",
+        "actual_arrival": "2026-09-14T21:00:00Z",
+        "is_passed": true
+      },
+      {
+        "name": "Peoria Staging Yard",
+        "coordinates": { "latitude": 40.6936, "longitude": -89.5890 },
+        "estimated_arrival": "2026-09-14T23:00:00Z",
+        "actual_arrival": null,
+        "is_passed": false
+      },
+      {
+        "name": "Kansas City Assembly Dock",
+        "coordinates": { "latitude": 39.0997, "longitude": -94.5786 },
+        "estimated_arrival": "2026-09-15T08:00:00Z",
+        "actual_arrival": null,
+        "is_passed": false
+      }
+    ],
+    "current_location": {
+      "latitude": 41.5120,
+      "longitude": -88.1150
+    },
+    "eta": "2026-09-15T15:00:00Z",
+    "created_at": "2026-09-14T09:00:00Z",
+    "updated_at": "2026-09-14T21:45:00Z"
+  },
+  {
+    "shipment_id": "SHP-1004",
+    "origin": {
+      "name": "Port of Antwerp Chemical Terminal",
+      "city": "Antwerp",
+      "country": "Belgium",
+      "coordinates": {
+        "latitude": 51.2194,
+        "longitude": 4.4025
+      },
+      "facility_type": "PORT"
+    },
+    "destination": {
+      "name": "Port of Rotterdam Maasvlakte Quay",
+      "city": "Rotterdam",
+      "country": "Netherlands",
+      "coordinates": {
+        "latitude": 51.9567,
+        "longitude": 4.0251
+      },
+      "facility_type": "PORT"
+    },
+    "carrier": "EuroTrans Marine",
+    "status": "DISRUPTED",
+    "cargo": {
+      "product_name": "Specialty Industrial Resins & Catalysts",
+      "cargo_type": "CHEMICALS",
+      "weight_kg": 26000.0,
+      "volume_cbm": 95.0,
+      "value_usd": 210000.0,
+      "is_hazardous": true
+    },
+    "temperature_requirement": {
+      "is_required": false,
+      "min_temp_c": null,
+      "max_temp_c": null,
+      "target_temp_c": null,
+      "tolerance_duration_minutes": 0
+    },
+    "route_waypoints": [
+      {
+        "name": "Antwerp Terminal Lock 5",
+        "coordinates": { "latitude": 51.2194, "longitude": 4.4025 },
+        "estimated_arrival": "2026-09-14T11:00:00Z",
+        "actual_arrival": "2026-09-14T11:15:00Z",
+        "is_passed": true
+      },
+      {
+        "name": "Scheldt-Rhine Waterway Marker 12",
+        "coordinates": { "latitude": 51.5200, "longitude": 4.2500 },
+        "estimated_arrival": "2026-09-14T15:00:00Z",
+        "actual_arrival": "2026-09-14T15:30:00Z",
+        "is_passed": true
+      },
+      {
+        "name": "Rotterdam Maasvlakte Berthing Gate",
+        "coordinates": { "latitude": 51.9567, "longitude": 4.0251 },
+        "estimated_arrival": "2026-09-14T18:00:00Z",
+        "actual_arrival": null,
+        "is_passed": false
+      }
+    ],
+    "current_location": {
+      "latitude": 51.9100,
+      "longitude": 4.0800
+    },
+    "eta": "2026-09-16T12:00:00Z",
+    "created_at": "2026-09-14T10:00:00Z",
+    "updated_at": "2026-09-14T18:30:00Z"
+  },
+  {
+    "shipment_id": "SHP-1005",
+    "origin": {
+      "name": "Philadelphia Specialty Biologics Depot",
+      "city": "Philadelphia",
+      "country": "USA",
+      "coordinates": {
+        "latitude": 39.9526,
+        "longitude": -75.1652
+      },
+      "facility_type": "WAREHOUSE"
+    },
+    "destination": {
+      "name": "Great Lakes Regional Health Warehouse",
+      "city": "Chicago",
+      "country": "USA",
+      "coordinates": {
+        "latitude": 41.8781,
+        "longitude": -87.6298
+      },
+      "facility_type": "DISTRIBUTION_CENTER"
+    },
+    "carrier": "PolarSafe Express",
+    "status": "IN_TRANSIT",
+    "cargo": {
+      "product_name": "Pediatric Critical Vaccines & Insulin Formulations",
+      "cargo_type": "PHARMACEUTICALS",
+      "weight_kg": 850.0,
+      "volume_cbm": 3.2,
+      "value_usd": 890000.0,
+      "is_hazardous": false
+    },
+    "temperature_requirement": {
+      "is_required": true,
+      "min_temp_c": 2.0,
+      "max_temp_c": 8.0,
+      "target_temp_c": 4.0,
+      "tolerance_duration_minutes": 30
+    },
+    "route_waypoints": [
+      {
+        "name": "Philadelphia Depot Outbound",
+        "coordinates": { "latitude": 39.9526, "longitude": -75.1652 },
+        "estimated_arrival": "2026-09-14T02:00:00Z",
+        "actual_arrival": "2026-09-14T02:10:00Z",
+        "is_passed": true
+      },
+      {
+        "name": "Pittsburgh Freight Check",
+        "coordinates": { "latitude": 40.4406, "longitude": -79.9959 },
+        "estimated_arrival": "2026-09-14T09:00:00Z",
+        "actual_arrival": "2026-09-14T09:15:00Z",
+        "is_passed": true
+      },
+      {
+        "name": "Gary Rest Area Corridor Check",
+        "coordinates": { "latitude": 41.5934, "longitude": -87.3465 },
+        "estimated_arrival": "2026-09-14T17:00:00Z",
+        "actual_arrival": "2026-09-14T17:45:00Z",
+        "is_passed": true
+      },
+      {
+        "name": "Chicago Health Facility Gate",
+        "coordinates": { "latitude": 41.8781, "longitude": -87.6298 },
+        "estimated_arrival": "2026-09-14T19:30:00Z",
+        "actual_arrival": null,
+        "is_passed": false
+      }
+    ],
+    "current_location": {
+      "latitude": 41.6020,
+      "longitude": -87.4100
+    },
+    "eta": "2026-09-14T23:30:00Z",
+    "created_at": "2026-09-14T01:30:00Z",
+    "updated_at": "2026-09-14T18:00:00Z"
+  }
+]

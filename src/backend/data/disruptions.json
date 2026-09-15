@@ -1,0 +1,69 @@
+[
+  {
+    "disruption_id": "DIS-2026-001",
+    "title": "Winter Storm Nova - Midwest Severe Blizzard & Road Closures",
+    "type": "WEATHER",
+    "severity": "CRITICAL",
+    "region_name": "Midwest Great Lakes Corridor (I-80 / I-90 / Northern Indiana / Illinois)",
+    "center_coordinates": {
+      "latitude": 41.8781,
+      "longitude": -87.6298
+    },
+    "impact_radius_km": 250.0,
+    "description": "Extreme lake-effect blizzard causing sub-zero temperatures (-18°C), zero-visibility whiteout conditions, and total commercial vehicle travel bans across the I-80 and I-90 transit corridors. Severe threat to standard transit and refrigerated cargo auxiliary power systems.",
+    "is_active": true,
+    "start_time": "2026-09-14T12:00:00Z",
+    "estimated_end_time": "2026-09-16T18:00:00Z",
+    "source": "National Weather Service / State DOT Emergency Broadcast",
+    "affected_corridors": [
+      "I-80-East-West",
+      "I-90-Corridor",
+      "Chicago-Hub-Spur",
+      "South-Bend-Logistics-Belt"
+    ]
+  },
+  {
+    "disruption_id": "DIS-2026-002",
+    "title": "Port of Rotterdam Terminal Stevedore Labour Strike",
+    "type": "LABOUR_STRIKE",
+    "severity": "HIGH",
+    "region_name": "Rotterdam Maasvlakte Quay & North Sea Access",
+    "center_coordinates": {
+      "latitude": 51.9567,
+      "longitude": 4.0251
+    },
+    "impact_radius_km": 65.0,
+    "description": "Unannounced union dockworker strike halting container cranes, barge offloading, and customs gate clearances across Europe's largest seaport. Anticipated vessel queuing exceeding 36 hours.",
+    "is_active": true,
+    "start_time": "2026-09-14T06:00:00Z",
+    "estimated_end_time": "2026-09-16T06:00:00Z",
+    "source": "Port of Rotterdam Authority Port Operations Bulletin",
+    "affected_corridors": [
+      "North-Sea-Entry-Channel",
+      "Scheldt-Rhine-Barge-Link",
+      "Maasvlakte-Intermodal-Rail"
+    ]
+  },
+  {
+    "disruption_id": "DIS-2026-003",
+    "title": "Red Sea Shipping Corridor Maritime Security Alert",
+    "type": "GEOPOLITICAL",
+    "severity": "CRITICAL",
+    "region_name": "Bab-el-Mandeb Strait & Southern Red Sea Maritime Transit Lane",
+    "center_coordinates": {
+      "latitude": 12.5898,
+      "longitude": 43.3364
+    },
+    "impact_radius_km": 400.0,
+    "description": "Heightened naval warning and threat to commercial cargo vessels prompting major ocean container lines to reroute around Africa via Cape of Good Hope, inducing transit delays of 10 to 14 days and bunker surcharge increases.",
+    "is_active": true,
+    "start_time": "2026-09-10T00:00:00Z",
+    "estimated_end_time": "2026-09-30T23:59:59Z",
+    "source": "International Maritime Bureau (IMB) Advisory",
+    "affected_corridors": [
+      "Suez-Southbound-Corridor",
+      "Red-Sea-Main-Channel",
+      "Gulf-of-Aden-Transit"
+    ]
+  }
+]
